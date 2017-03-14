@@ -1,12 +1,8 @@
-function supports_history_api() {
-  return !!(window.history && history.pushState);
-}
-
 function swapPhoto(href) {
   var req = new XMLHttpRequest();
   req.open("GET",
-           "http://gsyc.es/~grex/history_api/gallery/" +
-             href.split("/").pop(),
+           "http://localhost:8000/gallery/" +
+            href.split("/").pop(),
            false);
   req.send(null);
   if (req.status == 200) {
@@ -32,12 +28,14 @@ function setupHistoryClicks() {
 }
 
 window.onload = function() {
-  if (!supports_history_api()) { return; }
-  setupHistoryClicks();
-  window.setTimeout(function() {
-    window.addEventListener("popstate", function(e) {
-      swapPhoto(location.pathname);
-    }, false);
-  }, 1);
+  if(!Modernizr.history){
+    return;
+  }else{
+    setupHistoryClicks();
+    window.setTimeout(function() {
+      window.addEventListener("popstate", function(e) {
+        swapPhoto(location.pathname);
+      }, false);
+    }, 1);
+  }
 }
-
