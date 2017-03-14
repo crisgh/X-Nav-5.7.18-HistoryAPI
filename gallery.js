@@ -1,9 +1,10 @@
 function swapPhoto(href) {
   var req = new XMLHttpRequest();
   req.open("GET",
-           "http://localhost:8000/gallery/" +
+            "https://crisgh.github.io/X-Nav-5.7.18-HistoryAPI/gallery/"+
             href.split("/").pop(),
            false);
+  // antes para probar "http://localhost:8000/gallery/"
   req.send(null);
   if (req.status == 200) {
     document.getElementById("gallery").innerHTML = req.responseText;
